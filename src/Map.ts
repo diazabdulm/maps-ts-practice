@@ -1,4 +1,4 @@
-interface Mappable {
+export interface Mappable {
   markerContent(): string;
   location: {
     latitude: number;
