@@ -1,4 +1,5 @@
 interface Mappable {
+  markerContent(): string;
   location: {
     latitude: number;
     longitude: number;
@@ -16,12 +17,20 @@ export class Map {
   }
 
   addMarker(mappable: Mappable): void {
-    new google.maps.Marker({
+    const marker = new google.maps.Marker({
       map: this.googleMap,
       position: {
         lat: mappable.location.latitude,
         lng: mappable.location.longitude,
       },
+    });
+
+    const infoWindow = new google.maps.InfoWindow({
+      content: mappable.markerContent(),
+    });
+
+    marker.addListener("click", () => {
+      infoWindow.open(this.googleMap, marker);
     });
   }
 }
